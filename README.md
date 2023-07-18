@@ -1,6 +1,6 @@
-# OmniAuth v2 Shibboleth strategy
+# OmniAuth v2 Shibboleth provider strategy
 
-OmniAuth v2 Shibboleth strategy is an OmniAuth v2 strategy for authenticating through Shibboleth (SAML). If you do not know OmniAuth, please visit OmniAuth wiki.
+OmniAuth v2 Shibboleth strategy is an OmniAuth v2 strategy for authenticating through Shibboleth provider (SAML). If you do not know OmniAuth, please visit OmniAuth wiki.
 
 https://github.com/omniauth/omniauth/wiki
 
@@ -10,17 +10,17 @@ https://wiki.shibboleth.net/
 
 OmniAuth basically works as a middleware of Rack applications. It provides environment variable named 'omniauth.auth' (auth hash) after authenticating a user. The 'auth hash' includes the user's attributes. By providing user attributes in the fixed format, applications can easily implement authentication function using multiple authentication methods.
 
-OmniAuth Shibboleth strategy uses the 'auth hash' for providing user attributes passed by Shibboleth SP. It enables developers to use Shibboleth and the other authentication methods, including local auth, together in one application.
+OmniAuth Shibboleth provider strategy uses the 'auth hash' for providing user attributes passed by Shibboleth SP. It enables developers to use Shibboleth provider and the other authentication methods, including local auth, together in one application.
 
 ## Getting Started
 
 ### Install
 
-    gem 'omniauth-v2-shibboleth'
+    gem 'omniauth-v2-shibboleth-provider'
 
-### Setup Shibboleth Strategy
+### Setup Shibboleth provider Strategy
 
-To use OmniAuth Shibboleth strategy as a middleware in your rails application, add the following file to your rails application initializer directory.
+To use OmniAuth Shibboleth provider strategy as a middleware in your rails application, add the following file to your rails application initializer directory.
 
     % vi config/initializer/omniauth.rb
     Rails.application.config.middleware.use OmniAuth::Builder do
@@ -62,7 +62,7 @@ These can be changed by :uid_field, :name_field option. You can also add any "in
       }
     end
 
-In the previous example, Shibboleth strategy does not pass any :info fields and use 'uid' attribute as uid fields.
+In the previous example, Shibboleth provider strategy does not pass any :info fields and use 'uid' attribute as uid fields.
 
 ### More flexible attribute configuration
 
@@ -112,13 +112,13 @@ Example shibd.conf:
       require valid-user
     </Location>
 
-Shibboleth strategy just checks the existence of Shib-Session-ID or Shib-Application-ID.
+Shibboleth provider strategy just checks the existence of Shib-Session-ID or Shib-Application-ID.
 
 If you want to use omniauth-v2-shibboleth without Apache or IIS, you can try **rack-saml**. It supports a part of Shibboleth SP functions.
 
 https://github.com/toyokazu/rack-saml
 
-Shibboleth strategy assumes the attributes are provided via environment variables because the use of ShibUseHeaders option may cause some problems. The details are discussed in the following page:
+Shibboleth provider strategy assumes the attributes are provided via environment variables because the use of ShibUseHeaders option may cause some problems. The details are discussed in the following page:
 
 https://wiki.shibboleth.net/confluence/display/SHIB2/NativeSPSpoofChecking
 
@@ -150,7 +150,7 @@ If you use proxy based approach, please be sure to add ShibUseHeaders option in 
 
 ### debug mode
 
-When you deploy a new application, you may want to confirm the assumed attributes are correctly provided by Shibboleth SP. OmniAuth Shibboleth strategy provides a confirmation option :debug. If you set :debug true, you can see the environment variables provided at the /auth/shibboleth/callback uri.
+When you deploy a new application, you may want to confirm the assumed attributes are correctly provided by Shibboleth SP. OmniAuth Shibboleth provider strategy provides a confirmation option :debug. If you set :debug true, you can see the environment variables provided at the /auth/shibboleth/callback uri.
 
     % vi config/initializer/omniauth.rb
     Rails.application.config.middleware.use OmniAuth::Builder do
